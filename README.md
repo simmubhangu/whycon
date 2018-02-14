@@ -3,7 +3,7 @@ This package is used to change the targets value in the run time
 
 ### How to use this package
 1. Take a backup of your current whycon package and remove it from the workspace.
-2. Clone this [package](https://github.com/simmubhangu/whycon) in your workspace and build
+2. Clone this [package](https://github.com/simmubhangu/whycon) in your workspace and build you workspace
 3. Launch the whycon.launch file or you can use the same file, you were using previously to detect the marker
 
 ### How to change the targets in the runtime
