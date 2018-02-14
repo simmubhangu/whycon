@@ -18,7 +18,7 @@ This package is used to change the targets value in the run time
   *  threshold: In case you want to apply some condtion on the basic of marker, you can send the value and modify the code.
   * targets: this is the responce of the service which gives the current targets value on which algo is working. in case you need the value of target, you can use this value.
 3. Use the following command in another terminal to change the target value
-    ```
+    ```sh
     rosservice call /whycon/reset "number: 2
     threshold: 0"
     ```
@@ -26,7 +26,7 @@ This package is used to change the targets value in the run time
   
 4. lets take a look in the modified code.
 
-  ```
+  ```cpp
     bool whycon::WhyConROS::reset(whycon::SetNumberOfTargets::Request& request, whycon::SetNumberOfTargets::Response& response)
     {
       should_reset = true;
