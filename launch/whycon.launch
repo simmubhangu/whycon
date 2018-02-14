@@ -1,0 +1,53 @@
+<launch>
+  <arg name="name" default="whycon"/>
+  <arg name="targets" default="1"/>
+   <arg name="outer_diameter" default=".55"/>
+   <arg name="inner_diameter" default=".20"/>
+   <arg name="input_queue_size" default="100"/>
+
+
+   <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+    <param name="video_device" value="/dev/video0" />
+    <param name="image_width" value="640" />
+    <param name="image_height" value="480" />
+    <param name="pixel_format" value="yuyv" />
+    <param name="framerate" value="120" />
+    <param name="camera_frame_id" value="usb_cam" />
+    <param name="io_method" value="mmap"/>
+    <remap to="usb_cam/image_view" from="/camera/image_raw"/>
+  </node>
+
+  <group ns="usb_cam">
+    <node pkg="image_proc" type="image_proc" name="image_proc"/>
+  </group>
+
+<!--   <arg name="xscale" default="1.0"/>
+  <arg name="yscale" default="1.0"/>
+  <arg name="axis_order" default="4"/>
+
+  <node name="set_axis" type="set_axis" pkg="whycon" output="screen">
+    <param name="xscale" value="$(arg xscale)"/>
+    <param name="yscale" value="$(arg yscale)"/>
+    <param name="axis_order" value="$(arg axis_order)"/>
+
+  </node> -->
+
+
+  <node name="whycon" type="whycon" pkg="whycon" output="screen">
+    <param name="targets" value="$(arg targets)"/>
+    <param name="outer_diameter" value="$(arg outer_diameter)"/>
+    <param name="inner_diameter" value="$(arg inner_diameter)"/> 
+    <param name="input_queue_size" value="$(arg input_queue_size)"/> 
+    <param name="name" value="$(arg name)"/>
+
+    <remap to="/usb_cam/camera_info" from="camera/camera_info" />
+    <remap to="/usb_cam/image_raw" from="camera/image_rect_color" />  
+</node>
+<node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/whycon/image_out"/>
+    <param name="autosize" value="true" />
+  </node>
+ <!-- <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 0 25 0 0 0 1 camera origin 10"/> -->
+  <!-- <node name="transformer" type="transformer" pkg="whycon" output="screen"/> -->
+</launch>
+  
